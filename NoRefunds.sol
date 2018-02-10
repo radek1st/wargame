@@ -68,8 +68,8 @@ contract NoRefunds {
   //Allows a user to request a refund. If the signify that the refund is to be activated,
   //then the beneficiary will be given the refund (if the owner has already approved the request)
   function refund(bool _activate_refund, uint _amount, address _beneficiary) public {
+    RefundReq storage req = pending_refunds[msg.sender];
     if (_activate_refund) {
-      RefundReq storage req = pending_refunds[msg.sender];
       require(req.approved);
       require(req.request_amount <= _amount);
       require(req.request_beneficiary == _beneficiary);
